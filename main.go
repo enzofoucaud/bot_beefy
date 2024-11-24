@@ -112,11 +112,11 @@ func main() {
 		}
 
 		vaults := getVaults()
-		usdVaults := filterVaults(vaults, "ETH")
+		ethVaults := filterVaults(vaults, "ETH")
 
 		pages := map[int]*discordgo.MessageEmbed{}
 
-		for i, vault := range usdVaults {
+		for i, vault := range ethVaults {
 			if i%10 == 0 {
 				pages[i/10] = &discordgo.MessageEmbed{
 					Title: "ETH Vaults",
@@ -128,7 +128,11 @@ func main() {
 				tokens += token + "\n"
 			}
 
-			pages[i/10].Description += fmt.Sprintf("[%s](https://app.beefy.com/vault/%s) - **%.2f%%**\n", strings.Join(vault.Assets, "-"), vault.ID, vault.APY*100)
+			if !vault.IsCLM {
+				pages[i/10].Description += fmt.Sprintf("[%s](https://app.beefy.com/vault/%s) - **%.2f%%**\n", strings.Join(vault.Assets, "-"), vault.ID, vault.APY*100)
+			} else {
+				pages[i/10].Description += fmt.Sprintf("[%s](https://app.beefy.com/vault/%s) - CLM - **%.2f%%**\n", strings.Join(vault.Assets, "-"), vault.ID, vault.APY*100)
+			}
 		}
 
 		if err = manager.CreateMessage(s, m.ChannelID, &paginator.Paginator{

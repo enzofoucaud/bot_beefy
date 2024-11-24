@@ -55,6 +55,12 @@ func getVaults() []beefy.Vault {
 		return nil
 	}
 
+	apyBreakdown, err := beefy.GetAPYBreakdown()
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
 	apyBoostData, err := beefy.GetAPYBoosts()
 	if err != nil {
 		fmt.Println(err)
@@ -69,6 +75,12 @@ func getVaults() []beefy.Vault {
 			}
 		} else {
 			vaults[i].APY = 0.0
+		}
+		// breakdown
+		if breakdown, exists := apyBreakdown[vault.ID]; exists {
+			if breakdown.ClmApr > 0 {
+				vaults[i].IsCLM = true
+			}
 		}
 	}
 

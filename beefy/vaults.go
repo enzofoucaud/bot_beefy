@@ -34,6 +34,9 @@ type Vault struct {
 	PricePerFullShare   string   `json:"pricePerFullShare"`
 	APY                 float64  `json:"apy"`
 	TVL                 float64  `json:"tvl"`
+
+	// Move it next time
+	IsCLM bool
 }
 
 func GetVaults() ([]Vault, error) {
