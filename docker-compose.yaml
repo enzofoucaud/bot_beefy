@@ -2,6 +2,6 @@ services:
   server:
     build:
       context: .
-      target: final
+    container_name: bot_beefy
     volumes:
       - ./config.yaml:/config.yaml
