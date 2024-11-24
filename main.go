@@ -47,7 +47,11 @@ func main() {
 				tokens += token + "\n"
 			}
 
-			pages[i/10].Description += fmt.Sprintf("[%s](https://app.beefy.com/vault/%s) - **%.2f%%**\n", strings.Join(vault.Assets, "-"), vault.ID, vault.APY*100)
+			if !vault.IsCLM {
+				pages[i/10].Description += fmt.Sprintf("[%s](https://app.beefy.com/vault/%s) - **%.2f%%**\n", strings.Join(vault.Assets, "-"), vault.ID, vault.APY*100)
+			} else {
+				pages[i/10].Description += fmt.Sprintf("[%s](https://app.beefy.com/vault/%s) - CLM - **%.2f%%**\n", strings.Join(vault.Assets, "-"), vault.ID, vault.APY*100)
+			}
 		}
 
 		if len(pages) == 0 {
